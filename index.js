@@ -10,32 +10,34 @@ app.listen(3000, () => {
   console.log("Web server running");
 });
 
-// Create Minecraft bot
-const bot = mineflayer.createBot({
-  host: "vnxace.aternos.me", // Example: eyzuserver.aternos.me
-  port: 61163, // Java port
-  username: "EyzuBot", // Bot name
-});
+// Function to create the bot
+function createBot() {
+  const bot = mineflayer.createBot({
+    host: "vnxace.aternos.me", // Java IP from Aternos
+    port: 25565,               // Java port (check Aternos Java connect tab)
+    username: "EyzuBot",
+    timeout: 60000,            // 60 seconds timeout
+    auth: "offline"            // optional if server allows offline/cracked
+  });
 
-// Bot spawns
-bot.on("spawn", () => {
-  console.log("Bot joined server");
+  bot.on("spawn", () => {
+    console.log("Bot joined server");
 
-  // Anti-AFK jump
-  setInterval(() => {
-    bot.setControlState("jump", true);
-    setTimeout(() => bot.setControlState("jump", false), 500);
-  }, 30000);
-});
+    // Anti-AFK jump
+    setInterval(() => {
+      bot.setControlState("jump", true);
+      setTimeout(() => bot.setControlState("jump", false), 500);
+    }, 30000);
+  });
 
-// Reconnect if kicked
-bot.on("end", () => {
-  console.log("Bot disconnected, reconnecting...");
-  setTimeout(() => {
-    bot = mineflayer.createBot({
-      host: "YOUR_SERVER_IP",
-      port: 61163,
-      username: "EyzuBot",
-    });
-  }, 5000);
-});
+  // Reconnect if disconnected
+  bot.on("end", () => {
+    console.log("Bot disconnected, reconnecting...");
+    setTimeout(createBot, 5000); // call the same function to reconnect
+  });
+
+  bot.on("error", err => console.log("Bot error:", err));
+}
+
+// Start bot
+createBot();
