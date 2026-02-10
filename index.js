@@ -13,7 +13,7 @@ app.listen(3000, () => {
 // Create Minecraft bot
 const bot = mineflayer.createBot({
   host: "vnxace.aternos.me", // Example: eyzuserver.aternos.me
-  port: 61163, // Java port
+  port: 25565, // Java port
   username: "EyzuBot", // Bot name
 });
 
