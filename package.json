@@ -1,7 +1,7 @@
 {
   "name": "eyzubot",
   "version": "1.0.0",
-  "description": "Minecraft 24/7 AFK Bot",
+  "description": "24/7 Minecraft AFK Bot with Auto Reconnect",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -11,4 +11,3 @@
     "mineflayer": "^4.34.0"
   }
 }
-
