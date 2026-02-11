@@ -1,12 +1,14 @@
 const mineflayer = require("mineflayer");
 const express = require("express");
 
+// Web server
 const app = express();
 app.get("/", (req, res) => {
-  res.send("Bot running");
+  res.send("Bot is running 24/7");
 });
 app.listen(3000);
 
+// Function to create bot
 function createBot() {
   const bot = mineflayer.createBot({
     host: "vnxace.aternos.me",
@@ -15,9 +17,8 @@ function createBot() {
   });
 
   bot.on("spawn", () => {
-    console.log("Bot joined");
+    console.log("Bot joined server");
 
-    // Anti AFK
     setInterval(() => {
       bot.setControlState("jump", true);
       setTimeout(() => bot.setControlState("jump", false), 500);
@@ -25,14 +26,11 @@ function createBot() {
   });
 
   bot.on("end", () => {
-    console.log("Disconnected… reconnecting");
-    setTimeout(createBot, 10000); // wait 10 sec
+    console.log("Bot disconnected, reconnecting...");
+    setTimeout(createBot, 5000);
   });
 
-  bot.on("error", (err) => {
-    console.log("Bot error:", err.message);
-  });
+  bot.on("error", console.log);
 }
 
 createBot();
-
