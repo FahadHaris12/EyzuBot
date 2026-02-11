@@ -1,7 +1,7 @@
 const mineflayer = require("mineflayer");
 const express = require("express");
 
-// ===== WEB SERVER (Render 24/7) =====
+// ================= WEB SERVER (24/7 KEEP ALIVE) =================
 const app = express();
 
 app.get("/", (req, res) => {
@@ -9,41 +9,48 @@ app.get("/", (req, res) => {
 });
 
 app.listen(3000, () => {
-  console.log("Web server running");
+  console.log("🌐 Web server running on port 3000");
 });
 
-// ===== BOT FUNCTION =====
+// ================= BOT FUNCTION =================
 function createBot() {
 
   const bot = mineflayer.createBot({
-    host: "vnxace.aternos.me", // Your Aternos IP
-    port: 61163,               // Your Java port
-    username: "EyzuBot"
+    host: "vnxace.aternos.me", // 🔁 CHANGE to your server IP
+    port: 61163,               // 🔁 CHANGE if your Java port different
+    username: "EyzuBot"       // Bot name
   });
 
-  // When bot joins
+  // ===== When bot joins =====
   bot.on("spawn", () => {
-    console.log("✅ Bot joined server");
+    console.log("✅ Bot joined the server");
 
-    // Anti-AFK jump
+    // Anti-AFK Jump every 30 sec
     setInterval(() => {
       bot.setControlState("jump", true);
-      setTimeout(() => bot.setControlState("jump", false), 500);
+
+      setTimeout(() => {
+        bot.setControlState("jump", false);
+      }, 500);
+
     }, 30000);
   });
 
-  // Errors
+  // ===== Errors =====
   bot.on("error", (err) => {
     console.log("⚠️ Bot error:", err.message);
   });
 
-  // Reconnect when disconnected
+  // ===== When disconnected =====
   bot.on("end", () => {
-    console.log("❌ Bot disconnected — Reconnecting in 30s...");
-    setTimeout(createBot, 30000);
+    console.log("❌ Bot disconnected");
+    console.log("🔁 Reconnecting in 30 seconds...");
+
+    setTimeout(() => {
+      createBot();
+    }, 30000);
   });
 }
 
-// Start bot
+// Start bot first time
 createBot();
-
