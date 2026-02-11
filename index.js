@@ -1,56 +1,45 @@
 const mineflayer = require("mineflayer");
 const express = require("express");
 
-// ================= WEB SERVER (24/7 KEEP ALIVE) =================
 const app = express();
+const PORT = process.env.PORT || 3000;
 
+// Keep-alive web server
 app.get("/", (req, res) => {
-  res.send("EyzuBot is running 24/7 ✅");
+  res.send("Eyzu Bot is running 24/7");
 });
 
-app.listen(3000, () => {
-  console.log("🌐 Web server running on port 3000");
+app.listen(PORT, () => {
+  console.log("Web server running");
 });
 
-// ================= BOT FUNCTION =================
+// ===== BOT FUNCTION =====
 function createBot() {
+  console.log("Starting bot...");
 
   const bot = mineflayer.createBot({
-    host: "vnxace.aternos.me", // 🔁 CHANGE to your server IP
-    port: 25565,               // 🔁 CHANGE if your Java port different
-    username: "EyzuBot"       // Bot name
+    host: "vnxace.aternos.me",   // example: abc.aternos.me
+    port: 61163,              // your port
+    username: "EyzuBot"
   });
 
-  // ===== When bot joins =====
+  bot.on("login", () => {
+    console.log("✅ Bot connected");
+  });
+
   bot.on("spawn", () => {
-    console.log("✅ Bot joined the server");
-
-    // Anti-AFK Jump every 30 sec
-    setInterval(() => {
-      bot.setControlState("jump", true);
-
-      setTimeout(() => {
-        bot.setControlState("jump", false);
-      }, 500);
-
-    }, 30000);
+    console.log("📍 Bot spawned in server");
   });
 
-  // ===== Errors =====
-  bot.on("error", (err) => {
-    console.log("⚠️ Bot error:", err.message);
-  });
-
-  // ===== When disconnected =====
   bot.on("end", () => {
-    console.log("❌ Bot disconnected");
-    console.log("🔁 Reconnecting in 30 seconds...");
+    console.log("❌ Bot disconnected — Reconnecting in 30s...");
+    setTimeout(createBot, 30000);
+  });
 
-    setTimeout(() => {
-      createBot();
-    }, 30000);
+  bot.on("error", (err) => {
+    console.log("⚠️ Bot error:", err.code || err.message);
   });
 }
 
-// Start bot first time
+// Start first time
 createBot();
