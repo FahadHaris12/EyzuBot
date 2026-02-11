@@ -12,7 +12,7 @@ app.listen(3000);
 function createBot() {
   const bot = mineflayer.createBot({
     host: "vnxace.aternos.me",
-    port: 61163,
+    port: 25565,
     username: "EyzuBot",
   });
 
