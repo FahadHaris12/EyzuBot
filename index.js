@@ -1,37 +1,37 @@
 const mineflayer = require("mineflayer");
 const express = require("express");
 
-// Web server
+// Web server (for Render 24/7)
 const app = express();
+
 app.get("/", (req, res) => {
   res.send("Bot is running 24/7");
 });
-app.listen(3000);
 
-// Function to create bot
-function createBot() {
-  const bot = mineflayer.createBot({
-    host: "vnxace.aternos.me",
-    port: 61163,
-    username: "EyzuBot",
-  });
+app.listen(3000, () => {
+  console.log("Web server running");
+});
 
-  bot.on("spawn", () => {
-    console.log("Bot joined server");
+// Create bot
+const bot = mineflayer.createBot({
+  host: "vnxace.aternos.me", // Your server IP
+  port: 61163,               // Your Java port
+  username: "EyzuBot"       // Bot name
+});
 
-    setInterval(() => {
-      bot.setControlState("jump", true);
-      setTimeout(() => bot.setControlState("jump", false), 500);
-    }, 30000);
-  });
+// When bot joins
+bot.on("spawn", () => {
+  console.log("Bot joined server");
 
-  bot.on("end", () => {
-    console.log("Bot disconnected, reconnecting...");
-    setTimeout(createBot, 5000);
-  });
+  // Anti-AFK jump
+  setInterval(() => {
+    bot.setControlState("jump", true);
+    setTimeout(() => bot.setControlState("jump", false), 500);
+  }, 30000);
+});
 
-  bot.on("error", console.log);
-}
-
-createBot();
+// If bot disconnects
+bot.on("end", () => {
+  console.log("Bot disconnected");
+});
 
