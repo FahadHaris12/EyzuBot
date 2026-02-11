@@ -17,7 +17,7 @@ function createBot() {
 
   const bot = mineflayer.createBot({
     host: "vnxace.aternos.me", // 🔁 CHANGE to your server IP
-    port: 61163,               // 🔁 CHANGE if your Java port different
+    port: 25565,               // 🔁 CHANGE if your Java port different
     username: "EyzuBot"       // Bot name
   });
 
