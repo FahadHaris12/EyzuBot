@@ -14,7 +14,7 @@ app.listen(3000, () => {
 function createBot() {
   const bot = mineflayer.createBot({
     host: "vnxace.aternos.me", // Java IP from Aternos
-    port: 25565,               // Java port (check Aternos Java connect tab)
+    port: 61163,               // Java port (check Aternos Java connect tab)
     username: "EyzuBot",
     timeout: 60000,            // 60 seconds timeout
     auth: "offline"            // optional if server allows offline/cracked
