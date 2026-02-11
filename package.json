@@ -1,17 +1,14 @@
 {
   "name": "eyzubot",
   "version": "1.0.0",
-  "description": "24/7 Mineflayer bot for Aternos",
+  "description": "Minecraft 24/7 AFK Bot",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
-  "keywords": ["minecraft", "mineflayer", "bot"],
-  "author": "Eyzu",
-  "license": "ISC",
   "dependencies": {
-    "express": "^5.2.1",
+    "express": "^4.19.2",
     "mineflayer": "^4.34.0"
   }
 }
+
