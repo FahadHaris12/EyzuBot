@@ -1,45 +1,29 @@
-const mineflayer = require("mineflayer");
-const express = require("express");
+const mineflayer = require('mineflayer');
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-// Keep-alive web server
-app.get("/", (req, res) => {
-  res.send("Eyzu Bot is running 24/7");
-});
-
-app.listen(PORT, () => {
-  console.log("Web server running");
-});
-
-// ===== BOT FUNCTION =====
 function createBot() {
-  console.log("Starting bot...");
-
   const bot = mineflayer.createBot({
-    host: "vnxace.aternos.me",   // example: abc.aternos.me
-    port: 61163,              // your port
-    username: "EyzuBot"
+    host: 'vnxace.aternos.me', // example: eyzu.aternos.me
+    port: 61163,            // your java port
+    username: 'AFK_Kundi'
   });
 
-  bot.on("login", () => {
-    console.log("✅ Bot connected");
+  bot.on('login', () => {
+    console.log('✅ Bot joined');
+
+    // Anti AFK movement
+    setInterval(() => {
+      bot.setControlState('jump', true);
+      setTimeout(() => bot.setControlState('jump', false), 500);
+    }, 30000);
   });
 
-  bot.on("spawn", () => {
-    console.log("📍 Bot spawned in server");
-  });
-
-  bot.on("end", () => {
-    console.log("❌ Bot disconnected — Reconnecting in 30s...");
+  bot.on('end', () => {
+    console.log('❌ Disconnected — reconnecting in 30s');
     setTimeout(createBot, 30000);
   });
 
-  bot.on("error", (err) => {
-    console.log("⚠️ Bot error:", err.code || err.message);
-  });
+  bot.on('error', err => console.log('⚠️ Error:', err));
 }
 
-// Start first time
 createBot();
+
