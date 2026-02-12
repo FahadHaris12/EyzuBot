@@ -1,16 +1,33 @@
 const mineflayer = require('mineflayer');
+const express = require('express');
+
+/* ---------------- WEB SERVER (for Render) ---------------- */
+
+const app = express();
+
+app.get('/', (req, res) => {
+  res.send('AFK Bot is running ✅');
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`🌐 Web server running on port ${PORT}`);
+});
+
+/* ---------------- BOT CODE ---------------- */
 
 function createBot() {
   const bot = mineflayer.createBot({
     host: 'vnxace.aternos.me', // example: eyzu.aternos.me
-    port: 61163,            // your java port
-    username: 'AFK_Kundi'
+    port: 61163,            // Java port
+    username: 'AFK_Bot'
   });
 
   bot.on('login', () => {
-    console.log('✅ Bot joined');
+    console.log('✅ Bot joined server');
 
-    // Anti AFK movement
+    // Anti AFK jump
     setInterval(() => {
       bot.setControlState('jump', true);
       setTimeout(() => bot.setControlState('jump', false), 500);
@@ -22,8 +39,9 @@ function createBot() {
     setTimeout(createBot, 30000);
   });
 
-  bot.on('error', err => console.log('⚠️ Error:', err));
+  bot.on('error', err => {
+    console.log('⚠️ Bot error:', err);
+  });
 }
 
 createBot();
-
