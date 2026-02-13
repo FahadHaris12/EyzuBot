@@ -3,8 +3,8 @@ const mineflayer = require("mineflayer");
 
 // =================== CONFIG ===================
 const config = {
-  host: "NotGamerPie.aternos.me",
-  port: 54824,
+  host: "vnxace.aternos.me",
+  port: 61163,
   username: "AFKBot_04", // change name if duplicate login happens
   version: false, // auto-detect version
 
